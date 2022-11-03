@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">transferencia_rapida</string>
+    <string name="toolbar_main_title">Transferência Rápida</string>
+    <string name="my_balance">Meu saldo</string>
+    <string name="balance">R$ %s</string>
+    <string name="balance_placeholder">R$ 999.999,00</string>
+    <string name="consultation_date_placeholder">Valor consultado em 00/00/0000</string>
+    <string name="consultation_date">Valor consultado em %s</string>
+    <string name="transfer_text">Valor da transferência</string>
+    <string name="quantity_hint">Digite a quantidade</string>
+    <string name="transfer_to">Transferir para</string>
+    <string name="schedule_transfer">Agendar tranferência</string>
+    <string name="value_error_message">O valor digitado é maior que o seu saldo.</string>
+    <string name="transfer_in">Transferir em</string>
+    <string name="text_field_error">Erro no campo de texto</string>
+    <string name="select_contact">Toque para selecionar o contato</string>
+    <string name="select_date">Toque para escolher a data</string>
+</resources>

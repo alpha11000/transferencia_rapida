@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainFragment"
+    android:background="@color/white_primary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="1dp"
+            app:contentPadding="16dp"
+            android:layout_marginBottom="3dp"
+
+            app:cardCornerRadius="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextSm"
+                    android:textAlignment="center"
+                    android:textColor="@color/green_darker"
+                    android:text="@string/my_balance"/>
+
+                <TextView
+                    android:id="@+id/current_balance_tv"
+                    android:layout_marginTop="4dp"
+
+                    style="@style/TextLgBold"
+                    android:textAlignment="center"
+                    android:textColor="@color/green_darker"
+                    android:text="@string/balance_placeholder"/>
+
+                <TextView
+                    android:layout_marginTop="8dp"
+
+                    style="@style/TextSm"
+                    android:textAlignment="center"
+                    android:textColor="@color/green_darker"
+                    android:text="@string/consultation_date_placeholder"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/text_field_error_tv"
+            android:layout_marginTop="11dp"
+
+            style="@style/TextStBold"
+            android:textAlignment="center"
+            android:textColor="@color/blue_dark_primary"
+            android:visibility="visible"
+            android:text="@string/text_field_error"/>
+
+        <TextView
+            android:layout_marginTop="21dp"
+
+            style="@style/TextStBold"
+            android:textColor="@color/green_darker"
+            android:text="@string/transfer_text"/>
+
+        <EditText
+            android:id="@+id/transfer_value_edit_text"
+            style="@style/TextSt"
+            android:drawableEnd="@drawable/ic_baseline_attach_money_24"
+            android:hint="@string/quantity_hint"
+
+            android:inputType="numberDecimal"/>
+
+        <TextView
+            android:id="@+id/value_error_message_tv"
+            android:layout_marginTop="8dp"
+
+            style="@style/TextXsCondensed"
+            android:textColor="@color/dark_red"
+            android:visibility="visible"
+            android:text="@string/value_error_message"/>
+
+        <TextView
+            android:layout_marginTop="24dp"
+
+            style="@style/TextStBold"
+            android:textColor="@color/green_darker"
+            android:text="@string/transfer_to"/>
+
+        <EditText
+            style="@style/TextSt"
+            android:drawableEnd="@drawable/person_round"
+
+            android:enabled="false"
+            android:clickable="true"
+            android:hint="@string/select_contact"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/schedule_transfer_switch"
+                app:layout_constraintTop_toTopOf="@id/schedule_transfer_switch"
+
+                style="@style/TextXs"
+                android:textColor="@color/green_darker"
+
+                android:text="@string/schedule_transfer"/>
+            
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/schedule_transfer_switch"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="wrap_content"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_marginTop="24dp"
+
+            style="@style/TextStBold"
+            android:textColor="@color/green_darker"
+            android:text="@string/transfer_in"/>
+
+        <EditText
+            style="@style/TextSt"
+            android:drawableEnd="@drawable/person_round"
+            android:hint="@string/select_date"/>
+    </LinearLayout>
+
+    <Button
+        style="@style/disabled_button"
+        android:enabled="false"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:layout_margin="16dp"
+
+        android:text="Confirmar"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
