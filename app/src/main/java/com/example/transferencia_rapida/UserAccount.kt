@@ -1,19 +1,14 @@
 package com.example.transferencia_rapida
 
-import com.example.transferencia_rapida.utils.NumberFormatUtil
+import android.content.Context
+import com.example.transferencia_rapida.utils.JsonUtil
 
-object UserAccount {
-    val name : String
-    var currentBalanceValue : Double
+object UserAccount: Account(){
 
-    val currentBalanceText : String
-        get() {
-            return NumberFormatUtil.getFormattedNumber(currentBalanceValue)
-        }
-
-    init {
-        println("INICIALIZANDO ACOUNT")
-        name = "sla"
-        currentBalanceValue = 80000.05
+    fun initialize(context: Context){
+        val account = JsonUtil.convertJsonAssetToObject(context, "data.json", Account::class.java)
+        this.name = account.name
+        this.currentBalanceValue = account.currentBalanceValue
+        this.myContacts = account.myContacts
     }
 }

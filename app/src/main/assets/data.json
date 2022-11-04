@@ -1,0 +1,24 @@
+{
+    "saldo_atual": 492.81,
+    "nome": "Francisco Diógenes Perdão",
+    "meus_contatos": {
+        "qtd": 15,
+        "lista": [
+            {"id": 1120, "nome_completo": "Miguel Davi dos Anjos Mota"},
+            {"id": 1121, "nome_completo": "Sophia Maria"},
+            {"id": 5222, "nome_completo": "Heitor Lúcio Terno"},
+            {"id": 1123, "nome_completo": "Alice dos Santos Gomes"},
+            {"id": 4124, "nome_completo": "Isabella do Nascimento"},
+            {"id": 1125, "nome_completo": "Heitor Petri Araújo"},
+            {"id": 1126, "nome_completo": "Giovanna de Castro Neta"},
+            {"id": 1127, "nome_completo": "João Pedro Bitencour"},
+            {"id": 1128, "nome_completo": "Yasmin Pereira"},
+            {"id": 1222, "nome_completo": "Benjamin Litros Silva"},
+            {"id": 1129, "nome_completo": "Joaquim Teixeira"},
+            {"id": 1130, "nome_completo": "Fernanda Trono Ribeiro"},
+            {"id": 1131, "nome_completo": "Davi Mota dos Anjos"},
+            {"id": 1332, "nome_completo": "Agatha Raijhon de Paula"},
+            {"id": 1133, "nome_completo": "Otávio Lara Junior"}
+        ]
+    }
+}

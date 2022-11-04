@@ -29,10 +29,9 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val binding = FragmentMainBinding.inflate(inflater, container, false)
 
-        binding.transferValueEditText.doOnTextChanged { text, start, before, count ->
+        binding.transferValueEditText.doOnTextChanged { text, _, _, _ ->
             if(!text?.isEmpty()!!){
 
                 val value = text.toString().toDouble()
