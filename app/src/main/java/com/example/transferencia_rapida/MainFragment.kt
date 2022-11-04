@@ -1,7 +1,6 @@
 package com.example.transferencia_rapida
 
 import android.os.Bundle
-import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.core.widget.doOnTextChanged
 import com.example.transferencia_rapida.databinding.FragmentMainBinding
 import com.example.transferencia_rapida.utils.DateUtil
 import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.CalendarConstraints.DateValidator
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
@@ -38,12 +36,13 @@ class MainFragment : Fragment() {
     ): View? {
         val binding = FragmentMainBinding.inflate(inflater, container, false)
 
+        var transactionValue = 0.0
+
         binding.transferValueEditText.doOnTextChanged { text, _, _, _ ->
             if(!text?.isEmpty()!!){
+                transactionValue = text.toString().toDouble()
 
-                val value = text.toString().toDouble()
-
-                if(value > UserAccount.currentBalanceValue) {
+                if(transactionValue > UserAccount.currentBalanceValue) {
                     binding.textFieldErrorTv.visibility = View.VISIBLE
                     binding.valueErrorMessageTv.visibility = View.VISIBLE
                 }else {
@@ -55,25 +54,44 @@ class MainFragment : Fragment() {
 
         binding.currentBalanceTv.text = getString(R.string.balance, UserAccount.currentBalanceText)
 
+        UserAccount.addOnBalanceChangeCallback { _ , valueString ->
+            run {
+                binding.currentBalanceTv.text = getString(R.string.balance, valueString)
+            }
+        }
+
         binding.selectDate.setOnClickListener{
-            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-            calendar.add(Calendar.DATE, 0)
-
-            val builder = MaterialDatePicker.Builder.datePicker()
-
-            builder.setCalendarConstraints(
-                CalendarConstraints.Builder().setValidator(DateValidatorPointForward.from(calendar.timeInMillis)).build()
-            )
-
-            val datePicker = builder.build()
-            datePicker.show(parentFragmentManager, "DatePicker")
-
-            datePicker.addOnPositiveButtonClickListener{
+            showDatePickerDialog({
                 binding.selectDate.setText(DateUtil.getFormattedDate(it))
+            })
+        }
+
+        binding.confirmButton.setOnClickListener {
+            try {
+                UserAccount.withdrawValue(transactionValue)
+            }catch (e : Exception){
+                e.printStackTrace()
             }
         }
 
         return binding.root
+    }
+
+    private fun showDatePickerDialog(callback : (Long) -> Unit, setMinDate : Boolean = true){
+        val builder = MaterialDatePicker.Builder.datePicker()
+
+        if(setMinDate){
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DATE, 0)
+
+            builder.setCalendarConstraints(
+                CalendarConstraints.Builder().setValidator(DateValidatorPointForward.from(calendar.timeInMillis)).build()
+            )
+        }
+
+        val datePicker = builder.build()
+        datePicker.addOnPositiveButtonClickListener { callback.invoke(it) }
+        datePicker.showNow(parentFragmentManager, "DatePicker")
     }
 
     companion object {

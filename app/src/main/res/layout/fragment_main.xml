@@ -158,13 +158,13 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/confirm_button"
         style="@style/disabled_button"
-        android:enabled="false"
-
+        android:enabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
 
         android:layout_margin="16dp"
 
-        android:text="Confirmar"/>
+        android:text="@string/confirm_text"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

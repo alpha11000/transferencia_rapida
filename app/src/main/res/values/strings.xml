@@ -15,4 +15,5 @@
     <string name="text_field_error">Erro no campo de texto</string>
     <string name="select_contact">Toque para selecionar o contato</string>
     <string name="select_date">Toque para escolher a data</string>
+    <string name="confirm_text">Confirmar</string>
 </resources>

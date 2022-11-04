@@ -8,7 +8,9 @@ object UserAccount: Account(){
     fun initialize(context: Context){
         val account = JsonUtil.convertJsonAssetToObject(context, "data.json", Account::class.java)
         this.name = account.name
-        this.currentBalanceValue = account.currentBalanceValue
-        this.myContacts = account.myContacts
+        this.currentBalanceV = account.currentBalanceValue
+        this.myContactsL = account.myContacts
+
+        notifyBalanceChange()
     }
 }
