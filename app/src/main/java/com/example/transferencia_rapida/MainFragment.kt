@@ -1,12 +1,19 @@
 package com.example.transferencia_rapida
 
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import com.example.transferencia_rapida.databinding.FragmentMainBinding
+import com.example.transferencia_rapida.utils.DateUtil
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.CalendarConstraints.DateValidator
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 private const val ARG_PARAM1 = "param1"
@@ -47,6 +54,24 @@ class MainFragment : Fragment() {
         }
 
         binding.currentBalanceTv.text = getString(R.string.balance, UserAccount.currentBalanceText)
+
+        binding.selectDate.setOnClickListener{
+            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+            calendar.add(Calendar.DATE, 0)
+
+            val builder = MaterialDatePicker.Builder.datePicker()
+
+            builder.setCalendarConstraints(
+                CalendarConstraints.Builder().setValidator(DateValidatorPointForward.from(calendar.timeInMillis)).build()
+            )
+
+            val datePicker = builder.build()
+            datePicker.show(parentFragmentManager, "DatePicker")
+
+            datePicker.addOnPositiveButtonClickListener{
+                binding.selectDate.setText(DateUtil.getFormattedDate(it))
+            }
+        }
 
         return binding.root
     }
