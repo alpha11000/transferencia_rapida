@@ -1,13 +1,19 @@
 package com.example.transferencia_rapida
 
 import android.os.Bundle
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doBeforeTextChanged
 import androidx.core.widget.doOnTextChanged
 import com.example.transferencia_rapida.databinding.FragmentMainBinding
 import com.example.transferencia_rapida.utils.DateUtil
+import com.example.transferencia_rapida.utils.NumberFormatUtil
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -38,26 +44,17 @@ class MainFragment : Fragment() {
 
         var transactionValue = 0.0
 
-        binding.transferValueEditText.doOnTextChanged { text, _, _, _ ->
-            if(!text?.isEmpty()!!){
-                transactionValue = text.toString().toDouble()
+        val errorMessages = arrayOf(binding.textFieldErrorTv, binding.valueErrorMessageTv)
+        val moneyTextWatcher = MoneyTextWatcher(binding.transferValueEditText, errorMessages)
 
-                if(transactionValue > UserAccount.currentBalanceValue) {
-                    binding.textFieldErrorTv.visibility = View.VISIBLE
-                    binding.valueErrorMessageTv.visibility = View.VISIBLE
-                }else {
-                    binding.textFieldErrorTv.visibility = View.GONE
-                    binding.valueErrorMessageTv.visibility = View.GONE
-                }
-            }
+        binding.transferValueEditText.addTextChangedListener(moneyTextWatcher)
+        binding.transferValueEditText.addTextChangedListener{
+            transactionValue = moneyTextWatcher.transactionValue
         }
 
         binding.currentBalanceTv.text = getString(R.string.balance, UserAccount.currentBalanceText)
-
         UserAccount.addOnBalanceChangeCallback { _ , valueString ->
-            run {
-                binding.currentBalanceTv.text = getString(R.string.balance, valueString)
-            }
+            binding.currentBalanceTv.text = getString(R.string.balance, valueString)
         }
 
         binding.selectDate.setOnClickListener{
