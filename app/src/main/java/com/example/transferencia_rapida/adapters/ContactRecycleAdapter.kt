@@ -11,7 +11,9 @@ import com.example.transferencia_rapida.databinding.ContactAdapterBinding
 import com.example.transferencia_rapida.extensions.getInitialsFromFirstAndLast
 import com.example.transferencia_rapida.extensions.inflate
 
-class ContactRecycleAdapter : RecyclerView.Adapter<ContactRecycleAdapter.ContactHolder>() {
+class ContactRecycleAdapter(
+    val onItemSelectedListener : ((Contact) -> Unit)? = null
+) : RecyclerView.Adapter<ContactRecycleAdapter.ContactHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
         val inflatedView = parent.inflate(R.layout.contact_adapter, false)
@@ -20,7 +22,7 @@ class ContactRecycleAdapter : RecyclerView.Adapter<ContactRecycleAdapter.Contact
 
     override fun onBindViewHolder(holder: ContactHolder, position: Int) {
         val contact = UserAccount.myContacts.list[position]
-        holder.bindContact(contact)
+        holder.bindContact(contact, onItemSelectedListener)
     }
 
     override fun getItemCount(): Int {
@@ -28,10 +30,14 @@ class ContactRecycleAdapter : RecyclerView.Adapter<ContactRecycleAdapter.Contact
     }
 
     class ContactHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindContact(contact : Contact){
+        fun bindContact(contact : Contact, onItemSelectedListener : ((Contact) -> Unit)? = null){
             val binding = ContactAdapterBinding.bind(itemView)
             binding.contactName.text = contact.complete_name
             binding.contactInitials.text = contact.complete_name.getInitialsFromFirstAndLast()
+
+            itemView.setOnClickListener {
+                onItemSelectedListener?.invoke(contact)
+            }
         }
     }
 }

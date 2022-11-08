@@ -15,4 +15,9 @@ object DateUtil {
             null
         }
     }
+
+    fun getCurrentDate() : Long{
+        val calendar = Calendar.getInstance()
+        return calendar.timeInMillis
+    }
 }

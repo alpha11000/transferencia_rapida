@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.transferencia_rapida.adapters.ContactRecycleAdapter
 import com.example.transferencia_rapida.databinding.FragmentContactListBinding
@@ -34,8 +35,12 @@ class ContactList : Fragment() {
         // Inflate the layout for this fragment
         val binding = FragmentContactListBinding.inflate(inflater, container, false)
 
+        val adapter = ContactRecycleAdapter() {
+            Toast.makeText(this.context, it.complete_name, Toast.LENGTH_SHORT).show()
+        }
+
         binding.contactsRv.layoutManager = LinearLayoutManager(this.context)
-        binding.contactsRv.adapter = ContactRecycleAdapter()
+        binding.contactsRv.adapter = adapter
 
         return binding.root
     }

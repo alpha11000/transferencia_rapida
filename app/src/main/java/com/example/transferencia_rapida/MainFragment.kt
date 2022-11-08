@@ -41,19 +41,23 @@ class MainFragment : Fragment() {
 
         var transactionValue = 0.0
 
+        binding.currentBalanceTv.text = getString(R.string.balance, UserAccount.currentBalanceText)
+        UserAccount.addOnBalanceChangeCallback { _ , valueString ->
+            binding.currentBalanceTv.text = getString(R.string.balance, valueString)
+        }
+
         val errorMessages = arrayOf(binding.textFieldErrorTv, binding.valueErrorMessageTv)
         val moneyTextWatcher = MoneyTextWatcher(binding.transferValueEditText, errorMessages)
+
+        binding.consultationDate.text = getString(
+            R.string.consultation_date,
+            DateUtil.getFormattedDate(DateUtil.getCurrentDate())
+        )
 
         binding.transferValueEditText.setOnClickListener{binding.transferValueEditText.setSelection(binding.transferValueEditText.length())}
         binding.transferValueEditText.addTextChangedListener(moneyTextWatcher)
         binding.transferValueEditText.addTextChangedListener{
             transactionValue = moneyTextWatcher.transactionValue
-        }
-
-        binding.currentBalanceTv.text = getString(R.string.balance, UserAccount.currentBalanceText)
-
-        UserAccount.addOnBalanceChangeCallback { _ , valueString ->
-            binding.currentBalanceTv.text = getString(R.string.balance, valueString)
         }
 
         binding.selectDate.setOnClickListener{
@@ -82,7 +86,7 @@ class MainFragment : Fragment() {
 
         if(setMinDate){
             val calendar = Calendar.getInstance()
-            calendar.add(Calendar.DATE, 0)
+            calendar.add(Calendar.DATE, 1)
 
             builder.setCalendarConstraints(
                 CalendarConstraints.Builder().setValidator(DateValidatorPointForward.from(calendar.timeInMillis)).build()
