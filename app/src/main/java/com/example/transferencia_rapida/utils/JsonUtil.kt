@@ -2,6 +2,7 @@ package com.example.transferencia_rapida.utils
 
 import android.app.Application
 import android.content.Context
+import com.example.transferencia_rapida.UserAccount
 import com.google.gson.Gson
 
 object JsonUtil {

@@ -1,19 +1,15 @@
 package com.example.transferencia_rapida
 
 import android.os.Bundle
-import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doBeforeTextChanged
-import androidx.core.widget.doOnTextChanged
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.transferencia_rapida.databinding.FragmentMainBinding
 import com.example.transferencia_rapida.utils.DateUtil
-import com.example.transferencia_rapida.utils.NumberFormatUtil
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -39,7 +35,8 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+
         val binding = FragmentMainBinding.inflate(inflater, container, false)
 
         var transactionValue = 0.0
@@ -47,12 +44,14 @@ class MainFragment : Fragment() {
         val errorMessages = arrayOf(binding.textFieldErrorTv, binding.valueErrorMessageTv)
         val moneyTextWatcher = MoneyTextWatcher(binding.transferValueEditText, errorMessages)
 
+        binding.transferValueEditText.setOnClickListener{binding.transferValueEditText.setSelection(binding.transferValueEditText.length())}
         binding.transferValueEditText.addTextChangedListener(moneyTextWatcher)
         binding.transferValueEditText.addTextChangedListener{
             transactionValue = moneyTextWatcher.transactionValue
         }
 
         binding.currentBalanceTv.text = getString(R.string.balance, UserAccount.currentBalanceText)
+
         UserAccount.addOnBalanceChangeCallback { _ , valueString ->
             binding.currentBalanceTv.text = getString(R.string.balance, valueString)
         }
@@ -69,6 +68,10 @@ class MainFragment : Fragment() {
             }catch (e : Exception){
                 e.printStackTrace()
             }
+        }
+
+        binding.selectContact.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_contactListFragment)
         }
 
         return binding.root
@@ -89,25 +92,5 @@ class MainFragment : Fragment() {
         val datePicker = builder.build()
         datePicker.addOnPositiveButtonClickListener { callback.invoke(it) }
         datePicker.showNow(parentFragmentManager, "DatePicker")
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MainFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MainFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
