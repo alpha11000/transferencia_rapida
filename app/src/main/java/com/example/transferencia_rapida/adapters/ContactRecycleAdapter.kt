@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.transferencia_rapida.Contact
+import com.example.transferencia_rapida.MyContacts
 import com.example.transferencia_rapida.R
 import com.example.transferencia_rapida.UserAccount
 import com.example.transferencia_rapida.databinding.ContactAdapterBinding
@@ -12,11 +13,13 @@ import com.example.transferencia_rapida.extensions.getInitialsFromFirstAndLast
 import com.example.transferencia_rapida.extensions.inflate
 
 class ContactRecycleAdapter(
-    val onItemSelectedListener : ((Contact) -> Unit)? = null
+    private val contacts: Array<Contact>,
+    private val onItemSelectedListener : ((Contact) -> Unit)? = null
 ) : RecyclerView.Adapter<ContactRecycleAdapter.ContactHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
         val inflatedView = parent.inflate(R.layout.contact_adapter, false)
+        contacts.sortBy { c1 -> c1.complete_name }
         return ContactHolder(inflatedView)
     }
 
@@ -26,7 +29,7 @@ class ContactRecycleAdapter(
     }
 
     override fun getItemCount(): Int {
-        return UserAccount.myContacts.list.size
+        return contacts.size
     }
 
     class ContactHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

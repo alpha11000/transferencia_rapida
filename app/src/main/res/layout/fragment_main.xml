@@ -137,33 +137,43 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:layout_marginTop="24dp"
+        <LinearLayout
+            android:id="@+id/schedule_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            style="@style/TextStBold"
-            android:textColor="@color/green_darker"
-            android:text="@string/transfer_in"/>
+            <TextView
+                android:id="@+id/select_date_tv"
+                android:layout_marginTop="24dp"
 
-        <EditText
-            android:id="@+id/select_date"
-            style="@style/TextSt"
-            android:drawableEnd="@drawable/calendar"
+                style="@style/TextStBold"
+                android:textColor="@color/green_darker"
+                android:text="@string/transfer_in"/>
 
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:clickable="false"
-            android:cursorVisible="false"
-            android:backgroundTint="@color/blue_dark_primary"
+            <EditText
+                android:id="@+id/select_date"
+                style="@style/TextSt"
+                android:drawableEnd="@drawable/calendar"
 
-            android:hint="@string/select_date"/>
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:backgroundTint="@color/blue_dark_primary"
+
+                android:hint="@string/select_date"/>
+
+        </LinearLayout>
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/confirm_button"
-        style="@style/disabled_button"
-        android:enabled="true"
+        style="@style/button_style"
+        android:theme="@style/button_style"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
-
         android:layout_margin="16dp"
 
         android:text="@string/confirm_text"/>

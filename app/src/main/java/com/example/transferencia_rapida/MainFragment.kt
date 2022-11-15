@@ -41,6 +41,10 @@ class MainFragment : Fragment() {
 
         var transactionValue = 0.0
 
+        binding.scheduleTransferSwitch.setOnCheckedChangeListener{_, checked ->
+            binding.scheduleLayout.visibility = if(checked) View.VISIBLE else View.GONE
+        }
+
         binding.currentBalanceTv.text = getString(R.string.balance, UserAccount.currentBalanceText)
         UserAccount.addOnBalanceChangeCallback { _ , valueString ->
             binding.currentBalanceTv.text = getString(R.string.balance, valueString)

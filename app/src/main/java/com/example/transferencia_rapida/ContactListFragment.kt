@@ -31,11 +31,11 @@ class ContactList : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         val binding = FragmentContactListBinding.inflate(inflater, container, false)
 
-        val adapter = ContactRecycleAdapter() {
+        val adapter = ContactRecycleAdapter(UserAccount.myContacts.list) {
             Toast.makeText(this.context, it.complete_name, Toast.LENGTH_SHORT).show()
         }
 
