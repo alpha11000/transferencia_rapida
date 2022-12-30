@@ -22,7 +22,7 @@
         <item name="android:backgroundTint">@drawable/button_color</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/rounded_rectangle</item>
+        <item name="android:background">@drawable/rounded_button_ripple</item>
         <item name="android:textSize">16sp</item>
     </style>
 

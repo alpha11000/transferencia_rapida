@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="ripple_primary_color">#0D919191</color>
     <color name="blue_dark_primary">#416AA7</color>
     <color name="green_light">#C4E49F</color>
     <color name="dark_red">#D43838</color>

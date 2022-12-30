@@ -41,6 +41,8 @@ class MainFragment : Fragment() {
 
         var transactionValue = 0.0
 
+
+
         binding.scheduleTransferSwitch.setOnCheckedChangeListener{_, checked ->
             binding.scheduleLayout.visibility = if(checked) View.VISIBLE else View.GONE
         }
