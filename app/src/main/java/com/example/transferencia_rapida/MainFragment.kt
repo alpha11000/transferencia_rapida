@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.navigation.NavController
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.transferencia_rapida.ViewModels.TransactionViewModel
 import com.example.transferencia_rapida.databinding.FragmentMainBinding
 import com.example.transferencia_rapida.utils.DateUtil
 import com.google.android.material.datepicker.CalendarConstraints
@@ -40,20 +41,25 @@ class MainFragment : Fragment() {
         val binding = FragmentMainBinding.inflate(inflater, container, false)
 
         var transactionValue = 0.0
+        val viewModel : TransactionViewModel = ViewModelProvider(this)[TransactionViewModel::class.java]
 
-
+        binding.scheduleTransferSwitch.isChecked = viewModel.scheduleTransfer ?: false
 
         binding.scheduleTransferSwitch.setOnCheckedChangeListener{_, checked ->
             binding.scheduleLayout.visibility = if(checked) View.VISIBLE else View.GONE
+            viewModel.scheduleTransfer = true
         }
+
+        println("account value : ${UserAccount.currentBalanceValue}")
 
         binding.currentBalanceTv.text = getString(R.string.balance, UserAccount.currentBalanceText)
+
         UserAccount.addOnBalanceChangeCallback { _ , valueString ->
-            binding.currentBalanceTv.text = getString(R.string.balance, valueString)
+            binding.currentBalanceTv.text = activity?.getString(R.string.balance, valueString)
         }
 
-        val errorMessages = arrayOf(binding.textFieldErrorTv, binding.valueErrorMessageTv)
-        val moneyTextWatcher = MoneyTextWatcher(binding.transferValueEditText, errorMessages)
+        val valueErrorMessages = arrayOf(binding.textFieldErrorTv, binding.valueErrorMessageTv)
+        val moneyTextWatcher = MoneyTextWatcher(binding.transferValueEditText, valueErrorMessages)
 
         binding.consultationDate.text = getString(
             R.string.consultation_date,

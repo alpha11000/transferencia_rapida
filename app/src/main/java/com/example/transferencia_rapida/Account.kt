@@ -24,7 +24,7 @@ open class Account(
         if(value <= currentBalanceV)
             currentBalanceV -= value
         else
-            throw java.lang.Exception("withdrawal value grater than current balance.")
+            throw java.lang.Exception("withdrawal value greater than current balance.")
 
         notifyBalanceChange()
     }

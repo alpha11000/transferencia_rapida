@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.transferencia_rapida.adapters.ContactRecycleAdapter
 import com.example.transferencia_rapida.databinding.FragmentContactListBinding
@@ -36,6 +37,7 @@ class ContactList : Fragment() {
         val binding = FragmentContactListBinding.inflate(inflater, container, false)
 
         val adapter = ContactRecycleAdapter(UserAccount.myContacts.list) {
+            findNavController().navigate(R.id.action_contactListFragment_to_mainFragment)
             Toast.makeText(this.context, it.complete_name, Toast.LENGTH_SHORT).show()
         }
 

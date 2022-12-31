@@ -12,7 +12,10 @@
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_contactListFragment"
-            app:destination="@id/contactListFragment" />
+            app:destination="@id/contactListFragment"/>
+        <action
+            android:id="@+id/action_mainFragment_to_transferVoucherFragment"
+            app:destination="@id/TransferVoucherFragment"/>
     </fragment>
 
     <fragment
@@ -21,8 +24,8 @@
         android:label="fragment_contact_list"
         tools:layout="@layout/fragment_contact_list" >
         <action
-            android:id="@+id/action_contactListFragment_to_TransferVoucherFragment"
-            app:destination="@id/TransferVoucherFragment"/>
+            android:id="@+id/action_contactListFragment_to_mainFragment"
+            app:destination="@id/mainFragment"/>
     </fragment>
 
     <fragment
