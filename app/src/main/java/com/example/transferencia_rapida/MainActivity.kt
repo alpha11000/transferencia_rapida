@@ -1,9 +1,10 @@
 package com.example.transferencia_rapida
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.navigation.Navigation
 import com.example.transferencia_rapida.databinding.ActivityMainBinding
+import com.example.transferencia_rapida.viewModels.TransactionViewModel
 
 class MainActivity : AppCompatActivity() {
 

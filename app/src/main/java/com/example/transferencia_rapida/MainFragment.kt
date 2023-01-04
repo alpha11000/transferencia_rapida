@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.transferencia_rapida.ViewModels.TransactionViewModel
+import com.example.transferencia_rapida.viewModels.TransactionViewModel
 import com.example.transferencia_rapida.databinding.FragmentMainBinding
 import com.example.transferencia_rapida.utils.DateUtil
 import com.google.android.material.datepicker.CalendarConstraints
@@ -33,6 +33,8 @@ class MainFragment : Fragment() {
         }
     }
 
+    private val viewModel : TransactionViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +43,10 @@ class MainFragment : Fragment() {
         val binding = FragmentMainBinding.inflate(inflater, container, false)
 
         var transactionValue = 0.0
-        val viewModel : TransactionViewModel = ViewModelProvider(this)[TransactionViewModel::class.java]
+
+        viewModel.contact.observe(viewLifecycleOwner){
+            binding.selectContact.setText(it.complete_name)
+        }
 
         binding.scheduleTransferSwitch.isChecked = viewModel.scheduleTransfer ?: false
 

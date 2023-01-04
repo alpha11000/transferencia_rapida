@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.transferencia_rapida.adapters.ContactRecycleAdapter
 import com.example.transferencia_rapida.databinding.FragmentContactListBinding
+import com.example.transferencia_rapida.viewModels.TransactionViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,6 +30,8 @@ class ContactList : Fragment() {
         }
     }
 
+    private val viewModel : TransactionViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,9 +39,11 @@ class ContactList : Fragment() {
         // Inflate the layout for this fragment
         val binding = FragmentContactListBinding.inflate(inflater, container, false)
 
-        val adapter = ContactRecycleAdapter(UserAccount.myContacts.list) {
-            findNavController().navigate(R.id.action_contactListFragment_to_mainFragment)
-            Toast.makeText(this.context, it.complete_name, Toast.LENGTH_SHORT).show()
+        val adapter = ContactRecycleAdapter(UserAccount.myContacts.list)
+
+        adapter.setOnItemSelectedListener {
+            viewModel.contact.postValue(it)
+            findNavController().navigateUp()
         }
 
         binding.contactsRv.layoutManager = LinearLayoutManager(this.context)

@@ -1,25 +1,25 @@
 package com.example.transferencia_rapida.adapters
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.transferencia_rapida.Contact
-import com.example.transferencia_rapida.MyContacts
 import com.example.transferencia_rapida.R
 import com.example.transferencia_rapida.UserAccount
 import com.example.transferencia_rapida.databinding.ContactAdapterBinding
 import com.example.transferencia_rapida.extensions.getInitialsFromFirstAndLast
 import com.example.transferencia_rapida.extensions.inflate
 import com.example.transferencia_rapida.utils.ColorUtil
-import kotlin.random.Random
 
 class ContactRecycleAdapter(
-    private val contacts: Array<Contact>,
-    private val onItemSelectedListener : ((Contact) -> Unit)? = null
+    private val contacts: Array<Contact>
 ) : RecyclerView.Adapter<ContactRecycleAdapter.ContactHolder>() {
+
+    private var onItemSelectedListener : ((Contact) -> Unit)? = null
+
+    fun setOnItemSelectedListener(onItemSelectedListener: ((Contact) -> Unit)?){
+        this.onItemSelectedListener = onItemSelectedListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
         val inflatedView = parent.inflate(R.layout.contact_adapter, false)
