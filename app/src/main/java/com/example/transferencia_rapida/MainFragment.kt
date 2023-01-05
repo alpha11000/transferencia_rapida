@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -42,20 +43,18 @@ class MainFragment : Fragment() {
 
         val binding = FragmentMainBinding.inflate(inflater, container, false)
 
-        var transactionValue = 0.0
+        viewModel.validationMediatorLiveData.observe(viewLifecycleOwner){
+            binding.confirmButton.isEnabled = it
+        }
 
         viewModel.contact.observe(viewLifecycleOwner){
             binding.selectContact.setText(it.complete_name)
         }
 
-        binding.scheduleTransferSwitch.isChecked = viewModel.scheduleTransfer ?: false
-
         binding.scheduleTransferSwitch.setOnCheckedChangeListener{_, checked ->
             binding.scheduleLayout.visibility = if(checked) View.VISIBLE else View.GONE
-            viewModel.scheduleTransfer = true
+            viewModel.scheduleTransfer.postValue(checked)
         }
-
-        println("account value : ${UserAccount.currentBalanceValue}")
 
         binding.currentBalanceTv.text = getString(R.string.balance, UserAccount.currentBalanceText)
 
@@ -63,29 +62,30 @@ class MainFragment : Fragment() {
             binding.currentBalanceTv.text = activity?.getString(R.string.balance, valueString)
         }
 
-        val valueErrorMessages = arrayOf(binding.textFieldErrorTv, binding.valueErrorMessageTv)
-        val moneyTextWatcher = MoneyTextWatcher(binding.transferValueEditText, valueErrorMessages)
+        val moneyTextWatcher = MoneyTextWatcher(binding.transferValueEditText, binding.valueErrorMessageTv)
 
-        binding.consultationDate.text = getString(
+        binding.consultationDate.text = this.getString(
             R.string.consultation_date,
             DateUtil.getFormattedDate(DateUtil.getCurrentDate())
         )
 
         binding.transferValueEditText.setOnClickListener{binding.transferValueEditText.setSelection(binding.transferValueEditText.length())}
         binding.transferValueEditText.addTextChangedListener(moneyTextWatcher)
+
         binding.transferValueEditText.addTextChangedListener{
-            transactionValue = moneyTextWatcher.transactionValue
+            viewModel.transactionValue.postValue(moneyTextWatcher.transactionValue)
         }
 
         binding.selectDate.setOnClickListener{
             showDatePickerDialog({
+                viewModel.scheduleDate.value = it
                 binding.selectDate.setText(DateUtil.getFormattedDate(it))
             })
         }
 
         binding.confirmButton.setOnClickListener {
             try {
-                UserAccount.withdrawValue(transactionValue)
+                viewModel.transactionValue.value?.let { it1 -> UserAccount.withdrawValue(it1) }
             }catch (e : Exception){
                 e.printStackTrace()
             }

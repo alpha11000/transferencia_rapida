@@ -9,7 +9,7 @@ import com.example.transferencia_rapida.utils.NumberFormatUtil
 
 class MoneyTextWatcher(
     private val editText: EditText,
-    private val onErrorMessages : Array<TextView>? = null) : TextWatcher {
+    private val onErrorMessages : TextView? = null) : TextWatcher {
 
     private var transactionV = 0.0
 
@@ -34,9 +34,7 @@ class MoneyTextWatcher(
         val visibility = if (transactionV < UserAccount.currentBalanceValue) View.GONE else View.VISIBLE
 
         if (onErrorMessages != null) {
-            for(errorMessage in onErrorMessages){
-                errorMessage.visibility = visibility
-            }
+            onErrorMessages.visibility = visibility
         }
     }
 }
